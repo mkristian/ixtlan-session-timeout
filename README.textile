@@ -1,0 +1,42 @@
+h1. Rails Idle Session Timeout
+
+p. when you deal with privacy related data during a session then it is important to timeout these session since it happens to often that a session stays open. there a lot of examples how to "reuse" an open session.
+
+p. sometimes it is nessecary to have different timeout for different parts of the system. you can do this with
+
+bc. class MyController
+  def session_idle_timeout
+    Configuration.instance.user_idle_session_timeout
+  end
+  . . . 
+end 
+
+p. or you want to bind your admin session to the IP of the admin:
+
+bc. class MyAdminController
+  before_filter :check_session_ip_binding  
+  . . . 
+end 
+
+p. or you do not want any session timeout
+
+bc. class MyAdminController
+  skip_before_filter :check_session_expiry
+  . . . 
+end 
+
+h2. install
+
+p. in Gemfile add *gem 'ixtlan-session-timeout'*
+
+p. for the configuration add for example in _config/initializers/session-timeout.rb_. without that the default idle timeout is 5 minutes.
+
+bc. Rails.application.config.idle_session_timeout = 30 #minutes
+
+h2. relation to ixtlan gem
+
+p. the ixtlan gem provides a setup generator which adds configuration examples for this gem in _config/initializer/ixtlan.rb_ (the dynamic configuration is part of the ixtlan gem and it is just easier to keep that inside that gem !!!)
+
+h2. relation to ixtlan-audit gem
+
+p. if that gem is present and loaded than any timeout will be log with the help of _Ixtlan::Audit::UserLogger_
