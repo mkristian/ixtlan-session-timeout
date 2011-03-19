@@ -18,14 +18,8 @@ Gem::Specification.new do |s|
   s.rdoc_options = ['--main','README.textile']
   s.files += Dir['lib/**/*']
   s.files += Dir['spec/**/*']
-  s.files += Dir['features/**/*rb']
-  s.files += Dir['features/**/*feature']
   s.test_files += Dir['spec/**/*_spec.rb']
-  s.test_files += Dir['features/*.feature']
-  s.test_files += Dir['features/step_definitions/*.rb']
-  s.add_development_dependency 'rails', '3.0.1'
-  s.add_development_dependency 'rspec', '2.0.1'
-  s.add_development_dependency 'cucumber', '0.9.4'
+  s.add_development_dependency 'rspec', '2.4.0'
   s.add_development_dependency 'rake', '0.8.7'
 end
 

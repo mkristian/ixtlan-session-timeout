@@ -27,7 +27,11 @@ module Ixtlan
       protected
       
       def check_session_expiry
-        if !session[:expires_at].nil? and session[:expires_at] < DateTime.now
+puts "- - - -"
+p session[:expires_at].asctime if session[:expires_at]
+p DateTime.now.asctime
+p ( session[:expires_at] && session[:expires_at] < DateTime.now)
+        if session[:expires_at] && session[:expires_at] < DateTime.now
           # Session has expired.
           session_log("session timeout")
           expire_session
@@ -41,7 +45,7 @@ module Ixtlan
       # IP binding is not very useful in the wild since some ISP use 
       # a different IP for each request, i.e. the session uses many IPs
       def check_session_ip_binding
-        if !session[:session_ip].nil? and session[:session_ip] != request.headers['REMOTE_ADDR']
+        if !session[:session_ip].nil? && session[:session_ip] != request.headers['REMOTE_ADDR']
           # client IP has changed
           session_log("IP changed from #{session[:session_ip]} to #{request.headers['REMOTE_ADDR']}")
           expire_session
@@ -87,7 +91,7 @@ module Ixtlan
       end
       
       def session_idle_timeout
-        Rails.configuration.idle_session_timeout
+        Rails.configuration.session_idle_timeout
       end
     end
   end
