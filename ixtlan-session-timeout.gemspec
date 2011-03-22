@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 Gem::Specification.new do |s|
   s.name = 'ixtlan-session-timeout'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
 
   s.summary = 'idle session timeout on a per controller base'
   s.description = 'idle session timeout for rails on a per controller base'
