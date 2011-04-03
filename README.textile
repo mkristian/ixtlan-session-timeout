@@ -5,7 +5,7 @@ p. when you deal with privacy related data during a session then it is important
 p. sometimes it is nessecary to have different timeout for different parts of the system. you can do this with
 
 bc. class MyController
-  def session_idle_timeout
+  def idle_session_timeout
     Configuration.instance.user_idle_session_timeout
   end
   . . . 
@@ -21,7 +21,7 @@ end
 p. or you do not want any session timeout
 
 bc. class MyAdminController
-  skip_before_filter :check_session_expiry
+  skip_before_filter :check_session
   . . . 
 end 
 
@@ -29,7 +29,7 @@ h2. install
 
 p. in Gemfile add *gem 'ixtlan-session-timeout'*
 
-p. for the configuration add for example in _config/initializers/session-timeout.rb_. without that the default idle timeout is 5 minutes.
+p. for the configuration add for example in _config/initializers/session-timeout.rb_. without that the default idle timeout is 15 minutes.
 
 bc. Rails.application.config.idle_session_timeout = 30 #minutes
 

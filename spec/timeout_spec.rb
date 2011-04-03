@@ -4,6 +4,8 @@ require 'date'
 
 class Controller
   
+  attr_accessor :current_user
+
   def logger
     @logger ||= Logger.new(STDOUT)
   end
@@ -52,7 +54,7 @@ class Rails
     self
   end
 
-  def self.session_idle_timeout(val = nil)
+  def self.idle_session_timeout(val = nil)
     @val = MyDate.new(val) if val
     @val
   end
@@ -84,6 +86,7 @@ describe Ixtlan::Sessions::Timeout do
 
   before :each do
     @controller.session.clear
+    @controller.current_user = Object.new
   end
 
   it "should keep session when staying on same remote IP" do
@@ -107,7 +110,7 @@ describe Ixtlan::Sessions::Timeout do
   end
 
   it "should keep session if idle timeout is in the future" do
-    Rails.configuration.session_idle_timeout(1)
+    Rails.configuration.idle_session_timeout(1)
     @controller.session.size.should == 0
     @controller.send(:check_session_expiry).should be_true
     @controller.session.size.should == 1
@@ -116,7 +119,7 @@ describe Ixtlan::Sessions::Timeout do
   end
 
   it "should kill session if idle timeout is in the past" do
-    Rails.configuration.session_idle_timeout(-1)
+    Rails.configuration.idle_session_timeout(-1)
     @controller.session.size.should == 0
     # first the session has not expiration_date so it will be set
     @controller.send(:check_session_expiry).should be_true
@@ -126,9 +129,20 @@ describe Ixtlan::Sessions::Timeout do
     @controller.session.size.should == 0
   end
 
-  it "should use the controller session_idle_timeout if overwritten" do
+  it "should leave session along if there is no current_user" do
+    @controller.current_user = nil
+    @controller.session.size.should == 0
+    @controller.send(:check_session_expiry).should be_true
+    @controller.session.size.should == 0
+    @controller.send(:check_session_browser_signature).should be_true
+    @controller.session.size.should == 0
+    @controller.send(:check_session_ip_binding).should be_true
+    @controller.session.size.should == 0
+  end
+
+  it "should use the controller idle_session_timeout if overwritten" do
     @controller.class.class_eval do
-      def  session_idle_timeout
+      def idle_session_timeout
         MyDate.new(1)
       end
     end

@@ -10,12 +10,9 @@ Gem::Specification.new do |s|
   s.authors = ['mkristian']
   s.email = ['m.kristian@web.de']
 
-  s.files = Dir['MIT-LICENSE']
   s.licenses << 'MIT-LICENSE'
-#  s.files += Dir['History.txt']
+  s.files = Dir['MIT-LICENSE']
   s.files += Dir['README.textile']
-#  s.extra_rdoc_files = ['History.txt','README.textile']
-  s.rdoc_options = ['--main','README.textile']
   s.files += Dir['lib/**/*']
   s.files += Dir['spec/**/*']
   s.test_files += Dir['spec/**/*_spec.rb']
