@@ -82,8 +82,7 @@ module Ixtlan
       def retrieve_browser_signature
         [request.headers['HTTP_USER_AGENT'],
          request.headers['HTTP_ACCEPT_LANGUAGE'],
-         request.headers['HTTP_ACCEPT_ENCODING'],
-         request.headers['HTTP_ACCEPT']].join('|')
+         request.headers['HTTP_ACCEPT_ENCODING']].join('|')
       end
       
       def session_timeout
