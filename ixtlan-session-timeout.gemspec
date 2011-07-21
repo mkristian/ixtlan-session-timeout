@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 Gem::Specification.new do |s|
   s.name = 'ixtlan-session-timeout'
-  s.version = '0.3.0'
+  s.version = '0.4.0'
 
   s.summary = 'idle session timeout on a per controller base'
   s.description = 'idle session timeout for rails on a per controller base'
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files += Dir['lib/**/*']
   s.files += Dir['spec/**/*']
   s.test_files += Dir['spec/**/*_spec.rb']
-  s.add_development_dependency 'rspec', '2.4.0'
+  s.add_development_dependency 'rspec', '2.6.0'
   s.add_development_dependency 'rake', '0.8.7'
 end
 
